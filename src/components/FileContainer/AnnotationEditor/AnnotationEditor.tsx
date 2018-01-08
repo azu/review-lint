@@ -1,7 +1,7 @@
 import * as React from "react";
 import { traverse } from "txt-ast-traverse";
 import { ASTNodeTypes, TxtParentNode } from "@textlint/ast-node-types";
-import { Annotation } from "../Annotation";
+import { Annotation } from "../../../domain/Annotation/Annotation";
 import { deserialize, serialize } from "./ValueRule";
 
 const { Editor } = require("slate-react");

@@ -13,6 +13,9 @@
   },
   "dependencies": {
     "@textlint/ast-node-types": "^4.0.0",
+    "@textlint/kernel": "^2.0.3",
+    "@types/classnames": "^2.2.3",
+    "classnames": "^2.2.5",
     "immutable": "^3.8.2",
     "markdown-to-ast": "^6.0.2",
     "react": "^16.2.0",

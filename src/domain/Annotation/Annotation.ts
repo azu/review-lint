@@ -1,6 +1,6 @@
 export interface Annotation {
     [index: string]: any;
-    filePath: string;
+
     ruleId: string;
     message: string;
     index: number;
@@ -12,4 +12,10 @@ export interface Annotation {
         range: number[];
         details: any;
     };
+}
+
+export interface FileAnnotationCollection {
+    raw: string;
+    filePath: string;
+    annotations: Annotation[];
 }

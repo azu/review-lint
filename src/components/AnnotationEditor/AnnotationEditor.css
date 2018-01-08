@@ -1,0 +1,20 @@
+.AnnotationEditor {
+    word-wrap: break-word;
+    min-width: 10em;
+    font-family: "Roboto", sans-serif;
+    line-height: 1.4;
+}
+.AnnotationEditor [data-slate-editor] > div {
+    width: 100%;
+    padding-left: 3em;
+    counter-increment: linenumber;
+}
+
+.AnnotationEditor [data-slate-editor] > div::before {
+    content: counter(linenumber);
+    text-align: right;
+    width: 2em;
+    word-wrap: break-word;
+    position: absolute;
+    left: 0;
+}

@@ -1,6 +1,8 @@
 import * as React from "react";
 import { traverse } from "txt-ast-traverse";
 import { ASTNodeTypes, TxtParentNode } from "@textlint/ast-node-types";
+import { Annotation } from "../Annotation";
+import { deserialize, serialize } from "./ValueRule";
 
 const { Editor } = require("slate-react");
 const { Data } = require("slate");
@@ -8,47 +10,26 @@ const { Data } = require("slate");
 export type ValueType = {
     document: any;
     change(): any;
+    toJSON(): object;
 };
 
-export interface Annotation {
-    [index: string]: any;
-
-    messages: {
-        [index: string]: any;
-        ruleId: string;
-        message: string;
-        index: number;
-        line: number;
-        column: number;
-        severity: number;
-        data: {
-            [index: string]: any;
-            range: [number, number];
-            details: any;
-        };
-    }[];
-    filePath: string;
-}
-
 export interface AnnotationEditorProps {
-    value: ValueType;
-    txtAST: TxtParentNode;
+    text: string;
+
+    parse(text: string): TxtParentNode;
+
     annotations: Annotation[];
+    // Focus Annotation
+    focusAnnotation?: Annotation;
 }
 
 export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
     // Set the initial value when the app is first constructed.
     state = {
-        value: this.props.value
+        value: serialize(this.props.text)
     };
 
-    // On change, update the app's React state with the new editor value.
-    onChange = ({ value }: { value: ValueType }) => {
-        this.setState({ value });
-    };
-
-    componentDidMount() {
-        const { value } = this.state;
+    private refreshEditorWithValue(value: ValueType) {
         const document = value.document;
         const decorations: {
             anchorKey: string;
@@ -75,7 +56,7 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
             type = "highlight",
             data
         }: {
-            range: [number, number];
+            range: number[];
             type?: string;
             data?: any;
         }) => {
@@ -87,18 +68,24 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
                 marks: [{ type: type, data: Data.fromJSON(data) }]
             };
         };
-        decorations.push(
-            highlightRange({
-                range: [7, 10]
-            })
-        );
+
+        // focus highlight
+        if (this.props.focusAnnotation) {
+            decorations.push(
+                highlightRange({
+                    range: this.props.focusAnnotation.data.range,
+                    type: "highlight"
+                })
+            );
+        }
 
         // highlight nodes
-        traverse(this.props.txtAST, {
+        deserialize(value);
+        const txtAST = this.props.parse(this.props.text);
+        traverse(txtAST, {
             enter(node) {
                 switch (node.type) {
                     case ASTNodeTypes.Link: {
-                        console.log("link", node);
                         return decorations.push(
                             highlightRange({
                                 range: node.range,
@@ -187,40 +174,66 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
             }
         });
         this.props.annotations.forEach(annotation => {
-            annotation.messages.forEach(message => {
-                decorations.push(
-                    highlightRange({
-                        range: message.data.range as [number, number],
-                        type: "underline",
-                        data: message
-                    })
-                );
-            });
+            decorations.push(
+                highlightRange({
+                    range: annotation.data.range as [number, number],
+                    type: "underline",
+                    data: annotation
+                })
+            );
         });
         const change = value.change().setValue({ decorations });
-        this.setState({ value: change.value });
+        return change.value;
+    }
+
+    private scrollIntoViewAnnotation = (annotation: Annotation) => {
+        const range = annotation.data.data.range;
+        const textAtOffset = this.state.value.document.getTextAtOffset(range[0]);
+        if (!textAtOffset) {
+            return;
+        }
+        const node = document.querySelector(`[data-key="${textAtOffset.key}"]`);
+        if (node) {
+            node.scrollIntoView();
+        }
+    };
+
+    // On change, update the app's React state with the new editor value.
+    onChange = ({ value }: { value: ValueType }) => {
+        const newValue = this.refreshEditorWithValue(value);
+        this.setState({ value: newValue });
+    };
+
+    componentDidMount() {
+        const newValue = this.refreshEditorWithValue(this.state.value);
+        this.setState({ value: newValue });
+    }
+
+    componentWillReceiveProps(nextProps: AnnotationEditorProps) {
+        if (this.props.focusAnnotation !== nextProps.focusAnnotation && nextProps.focusAnnotation) {
+            this.scrollIntoViewAnnotation(nextProps.focusAnnotation);
+        }
     }
 
     // Render the editor.
     render() {
         return (
-            <Editor
-                readOnly
-                style={{
-                    whiteSpace: "",
-                    lineHeight: 1.5
-                }}
-                value={this.state.value}
-                onChange={this.onChange}
-                renderNode={this.renderNode}
-                renderMark={this.renderMark}
-            />
+            <div className={"AnnotationEditor"}>
+                <Editor
+                    value={this.state.value}
+                    onChange={this.onChange}
+                    renderNode={this.renderNode}
+                    renderMark={this.renderMark}
+                />
+            </div>
         );
     }
 
     renderNode = (props: any) => {
         const { node } = props;
         switch (node.type) {
+            case "linebreak":
+                return <br />;
             default: {
                 return;
             }
@@ -242,10 +255,15 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
             case "italic":
                 return <em>{props.children}</em>;
             case "underline": {
-                const onClick = () => {
-                    console.log(props.mark.toJSON());
-                };
-                return <u onClick={onClick}>{props.children}</u>;
+                return (
+                    <span
+                        style={{
+                            borderBottom: "2px solid #ff3333"
+                        }}
+                    >
+                        {props.children}
+                    </span>
+                );
             }
             case "link": {
                 const href = mark.data.get("href");

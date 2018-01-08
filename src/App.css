@@ -1,28 +1,24 @@
 .App {
-    text-align: center;
+    display: grid;
+    grid-template-columns: 100px 1fr 300px;
+    grid-template-rows: minmax(300px, auto) 1fr;
+    max-width: 1280px;
+    width: calc(100% - 50px);
+    margin-right: auto;
+    margin-left: auto;
 }
 
-.App-logo {
-    animation: App-logo-spin infinite 20s linear;
-    height: 80px;
+.AnnotationEditor {
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
 }
 
-.App-header {
-    background-color: #222;
-    height: 150px;
-    padding: 20px;
-    color: white;
+.AnnotationListContainer {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
 }
 
-.App-intro {
-    font-size: large;
-}
-
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.AnnotationList {
+    position: sticky;
+    top: 10px;
 }

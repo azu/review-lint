@@ -7,6 +7,41 @@ import { deserialize, serialize } from "./ValueRule";
 const { Editor } = require("slate-react");
 const { Data } = require("slate");
 
+const getOffset = (value: ValueType, targetOffset: number) => {
+    const document = value.document;
+    const startNode = document.getTextAtOffset(targetOffset);
+    const offset = document.getOffset(startNode.key);
+    return targetOffset - offset;
+};
+const getKeyAtOffset = (value: ValueType, targetOffset: number) => {
+    const document = value.document;
+    const textAtOffset = document.getTextAtOffset(targetOffset);
+    if (!textAtOffset) {
+        return "";
+    }
+    return textAtOffset.key;
+};
+const highlightRange = (
+    value: ValueType,
+    {
+        range,
+        type = "highlight",
+        data
+    }: {
+        range: number[];
+        type?: string;
+        data?: any;
+    }
+): SlateMark => {
+    return {
+        anchorKey: getKeyAtOffset(value, range[0]),
+        anchorOffset: getOffset(value, range[0]),
+        focusKey: getKeyAtOffset(value, range[1]),
+        focusOffset: getOffset(value, range[1]),
+        marks: [{ type: type, data: Data.fromJSON(data) }]
+    };
+};
+
 export type ValueType = {
     document: any;
     change(): any;
@@ -23,57 +58,27 @@ export interface AnnotationEditorProps {
     focusAnnotation?: Annotation;
 }
 
+type SlateMark = {
+    anchorKey: string;
+    anchorOffset: number;
+    focusKey: string;
+    focusOffset: number;
+    marks: { type: string; data: any }[];
+};
+
 export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
     // Set the initial value when the app is first constructed.
     state = {
         value: serialize(this.props.text)
     };
 
-    private refreshEditorWithValue(value: ValueType) {
-        const document = value.document;
-        const decorations: {
-            anchorKey: string;
-            anchorOffset: number;
-            focusKey: string;
-            focusOffset: number;
-            marks: { type: string; data: any }[];
-        }[] = [];
-
-        const getOffset = (targetOffset: number) => {
-            const startNode = document.getTextAtOffset(targetOffset);
-            const offset = document.getOffset(startNode.key);
-            return targetOffset - offset;
-        };
-        const getKeyAtOffset = (targetOffset: number) => {
-            const textAtOffset = document.getTextAtOffset(targetOffset);
-            if (!textAtOffset) {
-                return "";
-            }
-            return textAtOffset.key;
-        };
-        const highlightRange = ({
-            range,
-            type = "highlight",
-            data
-        }: {
-            range: number[];
-            type?: string;
-            data?: any;
-        }) => {
-            return {
-                anchorKey: getKeyAtOffset(range[0]),
-                anchorOffset: getOffset(range[0]),
-                focusKey: getKeyAtOffset(range[1]),
-                focusOffset: getOffset(range[1]),
-                marks: [{ type: type, data: Data.fromJSON(data) }]
-            };
-        };
-
+    private refreshEditorWithValue(value: ValueType, focusAnnotation?: Annotation) {
+        const decorations: SlateMark[] = [];
         // focus highlight
-        if (this.props.focusAnnotation) {
+        if (focusAnnotation) {
             decorations.push(
-                highlightRange({
-                    range: this.props.focusAnnotation.range,
+                highlightRange(value, {
+                    range: focusAnnotation.range,
                     type: "highlight"
                 })
             );
@@ -87,7 +92,7 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
                 switch (node.type) {
                     case ASTNodeTypes.Link: {
                         return decorations.push(
-                            highlightRange({
+                            highlightRange(value, {
                                 range: node.range,
                                 type: "link",
                                 data: {
@@ -98,7 +103,7 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
                     }
                     case ASTNodeTypes.Header: {
                         return decorations.push(
-                            highlightRange({
+                            highlightRange(value, {
                                 range: node.range,
                                 type: "bold"
                             })
@@ -106,7 +111,7 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
                     }
                     case ASTNodeTypes.Code: {
                         return decorations.push(
-                            highlightRange({
+                            highlightRange(value, {
                                 range: node.range,
                                 type: "code"
                             })
@@ -114,7 +119,7 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
                     }
                     case ASTNodeTypes.Strong: {
                         return decorations.push(
-                            highlightRange({
+                            highlightRange(value, {
                                 range: node.range,
                                 type: "bold"
                             })
@@ -122,7 +127,7 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
                     }
                     case ASTNodeTypes.Emphasis: {
                         return decorations.push(
-                            highlightRange({
+                            highlightRange(value, {
                                 range: node.range,
                                 type: "bold"
                             })
@@ -130,7 +135,7 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
                     }
                     case ASTNodeTypes.CodeBlock: {
                         return decorations.push(
-                            highlightRange({
+                            highlightRange(value, {
                                 range: node.range,
                                 type: "code"
                             })
@@ -138,7 +143,7 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
                     }
                     case ASTNodeTypes.Delete: {
                         return decorations.push(
-                            highlightRange({
+                            highlightRange(value, {
                                 range: node.range,
                                 type: "del"
                             })
@@ -146,7 +151,7 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
                     }
                     case ASTNodeTypes.HtmlBlock: {
                         return decorations.push(
-                            highlightRange({
+                            highlightRange(value, {
                                 range: node.range,
                                 type: "code"
                             })
@@ -154,7 +159,7 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
                     }
                     case ASTNodeTypes.Html: {
                         return decorations.push(
-                            highlightRange({
+                            highlightRange(value, {
                                 range: node.range,
                                 type: "code"
                             })
@@ -162,7 +167,7 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
                     }
                     case ASTNodeTypes.BlockQuote: {
                         return decorations.push(
-                            highlightRange({
+                            highlightRange(value, {
                                 range: node.range,
                                 type: "quote"
                             })
@@ -175,7 +180,7 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
         });
         this.props.annotations.forEach(annotation => {
             decorations.push(
-                highlightRange({
+                highlightRange(value, {
                     range: annotation.range,
                     type: "underline",
                     data: annotation
@@ -186,9 +191,9 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
         return change.value;
     }
 
-    private scrollIntoViewAnnotation = (annotation: Annotation) => {
+    private scrollIntoViewAnnotation = (value: ValueType, annotation: Annotation) => {
         const range = annotation.range;
-        const textAtOffset = this.state.value.document.getTextAtOffset(range[0]);
+        const textAtOffset = value.document.getTextAtOffset(range[0]);
         if (!textAtOffset) {
             return;
         }
@@ -200,7 +205,7 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
 
     // On change, update the app's React state with the new editor value.
     onChange = ({ value }: { value: ValueType }) => {
-        const newValue = this.refreshEditorWithValue(value);
+        const newValue = this.refreshEditorWithValue(value, this.props.focusAnnotation);
         this.setState({ value: newValue });
     };
 
@@ -210,8 +215,16 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
     }
 
     componentWillReceiveProps(nextProps: AnnotationEditorProps) {
-        if (this.props.focusAnnotation !== nextProps.focusAnnotation && nextProps.focusAnnotation) {
-            this.scrollIntoViewAnnotation(nextProps.focusAnnotation);
+        if (this.props.focusAnnotation !== nextProps.focusAnnotation) {
+            if (nextProps.focusAnnotation) {
+                this.scrollIntoViewAnnotation(this.state.value, nextProps.focusAnnotation);
+            }
+            const newValue = this.refreshEditorWithValue(this.state.value, nextProps.focusAnnotation);
+            this.setState({ value: newValue });
+        }
+        if (this.props.text !== nextProps.text && nextProps.text) {
+            const newValue = this.props.parse(nextProps.text);
+            this.setState({ value: newValue });
         }
     }
 

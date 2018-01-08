@@ -226,7 +226,7 @@ export class App extends BaseContainer<typeof storeGroup.state> {
                                     text={collection.raw}
                                     parse={parse}
                                     annotations={collection.annotations}
-                                    focusAnnotation={collection.annotations[0]}
+                                    focusAnnotation={this.props.annotation.focusAnnotation}
                                 />
                             );
                         }}

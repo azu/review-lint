@@ -1,0 +1,45 @@
+{
+  "name": "review-lint",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "react-scripts-ts build",
+    "precommit": "lint-staged",
+    "postcommit": "git reset",
+    "eject": "react-scripts-ts eject",
+    "start": "react-scripts-ts start",
+    "test": "react-scripts-ts test --env=jsdom",
+    "prettier": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\""
+  },
+  "dependencies": {
+    "@textlint/ast-node-types": "^4.0.0",
+    "immutable": "^3.8.2",
+    "markdown-to-ast": "^6.0.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts-ts": "2.8.0",
+    "slate": "^0.32.0",
+    "slate-react": "^0.11.0",
+    "txt-ast-traverse": "^2.0.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.0.1",
+    "@types/node": "^8.5.7",
+    "@types/react": "^16.0.34",
+    "@types/react-dom": "^16.0.3",
+    "husky": "^0.14.3",
+    "lint-staged": "^6.0.0",
+    "prettier": "^1.9.2"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,css}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "singleQuote": false,
+    "printWidth": 120,
+    "tabWidth": 4
+  }
+}

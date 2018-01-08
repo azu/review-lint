@@ -1,7 +1,7 @@
 import * as React from "react";
 import { traverse } from "txt-ast-traverse";
 import { ASTNodeTypes, TxtParentNode } from "@textlint/ast-node-types";
-import { Annotation } from "../../../domain/Annotation/Annotation";
+import { Annotation } from "../../../package/annotation/Annotation";
 import { deserialize, serialize } from "./ValueRule";
 
 const { Editor } = require("slate-react");
@@ -73,7 +73,7 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
         if (this.props.focusAnnotation) {
             decorations.push(
                 highlightRange({
-                    range: this.props.focusAnnotation.data.range,
+                    range: this.props.focusAnnotation.range,
                     type: "highlight"
                 })
             );
@@ -176,7 +176,7 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
         this.props.annotations.forEach(annotation => {
             decorations.push(
                 highlightRange({
-                    range: annotation.data.range as [number, number],
+                    range: annotation.range,
                     type: "underline",
                     data: annotation
                 })
@@ -187,7 +187,7 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
     }
 
     private scrollIntoViewAnnotation = (annotation: Annotation) => {
-        const range = annotation.data.data.range;
+        const range = annotation.range;
         const textAtOffset = this.state.value.document.getTextAtOffset(range[0]);
         if (!textAtOffset) {
             return;

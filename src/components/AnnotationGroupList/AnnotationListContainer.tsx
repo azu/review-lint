@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as path from "path";
-import { Annotation, FileAnnotationCollection } from "../../domain/Annotation/Annotation";
+import { Annotation } from "../../package/annotation/Annotation";
+import { AnnotationCollection } from "../../package/annotation/AnnotationCollection";
 
 export interface AnnotationListItemProps {
     annotation: Annotation;
@@ -12,7 +13,7 @@ export class AnnotationListItem extends React.Component<AnnotationListItemProps,
             <li className={"AnnotationListItem"}>
                 <details className={"AnnotationListItem-details"}>
                     <summary>{this.props.annotation.message}</summary>
-                    {JSON.stringify(this.props.annotation.data.details)}
+                    {JSON.stringify(this.props.annotation.details)}
                 </details>
             </li>
         );
@@ -20,12 +21,12 @@ export class AnnotationListItem extends React.Component<AnnotationListItemProps,
 }
 
 export interface AnnotationListContainerProps {
-    fileAnnotationCollection: FileAnnotationCollection;
+    annotationCollection: AnnotationCollection;
 }
 
 export class AnnotationListContainer extends React.Component<AnnotationListContainerProps, {}> {
     render() {
-        const fileAnnotationCollection = this.props.fileAnnotationCollection;
+        const fileAnnotationCollection = this.props.annotationCollection;
         const list = fileAnnotationCollection.annotations.map((annotation, index) => {
             return <AnnotationListItem key={annotation.ruleId + index} annotation={annotation} />;
         });

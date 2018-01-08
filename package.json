@@ -15,7 +15,11 @@
     "@textlint/ast-node-types": "^4.0.0",
     "@textlint/kernel": "^2.0.3",
     "@types/classnames": "^2.2.3",
+    "almin": "^0.14.0",
+    "almin-logger": "^6.1.0",
+    "almin-react-container": "^0.5.0",
     "classnames": "^2.2.5",
+    "ddd-base": "^0.3.1",
     "immutable": "^3.8.2",
     "markdown-to-ast": "^6.0.2",
     "react": "^16.2.0",
@@ -23,7 +27,8 @@
     "react-scripts-ts": "2.8.0",
     "slate": "^0.32.0",
     "slate-react": "^0.11.0",
-    "txt-ast-traverse": "^2.0.2"
+    "txt-ast-traverse": "^2.0.2",
+    "ulid": "^2.3.0"
   },
   "devDependencies": {
     "@types/jest": "^22.0.1",

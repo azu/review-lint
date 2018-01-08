@@ -1,4 +1,6 @@
-import { FileAnnotationCollection } from "./Annotation";
+import { ulid } from "ulid";
+import { AnnotationCollection, AnnotationCollectionIdentifier } from "./AnnotationCollection";
+import { Annotation, AnnotationIdentifier } from "./Annotation";
 
 export class FromResult {
     // DIFFERENCE POINT with kernel
@@ -10,6 +12,8 @@ export class FromResult {
 }
 
 export class FromResultMessage {
+    [index: string]: any;
+    id?: string;
     // Rule Id
     ruleId: string;
     message: string;
@@ -31,22 +35,21 @@ export class FromResultMessage {
     severity: number;
 }
 
-export function convertToFileAnnotationCollection(result: FromResult): FileAnnotationCollection {
+export function convertToFileAnnotationCollection(result: FromResult): AnnotationCollection {
     const annotations = result.messages.map(message => {
-        return {
-            filePath: result.filePath,
+        return new Annotation({
+            id: new AnnotationIdentifier(message.id || ulid()),
             ruleId: message.ruleId,
             message: message.message,
-            index: message.index,
-            line: message.line,
-            column: message.column,
             severity: message.severity,
-            data: message.data
-        };
+            range: message.data.range,
+            details: message.data.details
+        });
     });
-    return {
+    return new AnnotationCollection({
+        id: new AnnotationCollectionIdentifier(ulid()),
         raw: result.raw,
         filePath: result.filePath,
         annotations: annotations
-    };
+    });
 }

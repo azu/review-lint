@@ -1,12 +1,12 @@
 import * as React from "react";
 import { ReactNode } from "react";
-import { FileAnnotationCollection } from "../../domain/Annotation/Annotation";
 import * as classnames from "classnames";
+import { AnnotationCollection } from "../../package/annotation/AnnotationCollection";
 
 export interface AnnotationGroupListProps {
     className?: string;
-    fileAnnotationCollections: FileAnnotationCollection[];
-    render: (fileAnnotationCollection: FileAnnotationCollection) => ReactNode;
+    fileAnnotationCollections: AnnotationCollection[];
+    render: (fileAnnotationCollection: AnnotationCollection) => ReactNode;
 }
 
 export class AnnotationGroupList extends React.Component<AnnotationGroupListProps, {}> {

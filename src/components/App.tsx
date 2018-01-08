@@ -1,10 +1,12 @@
 import * as React from "react";
-import { AnnotationEditor } from "./components/FileContainer/AnnotationEditor/AnnotationEditor";
-import { FileAnnotationCollection } from "./domain/Annotation/Annotation";
-import { FileContainer } from "./components/FileContainer/FileContainer";
-import { FileHeader } from "./components/FileContainer/FileHeader/FileHeader";
-import { AnnotationGroupList } from "./components/AnnotationGroupList/AnnotationGroupList";
-import { AnnotationListContainer } from "./components/AnnotationGroupList/AnnotationListContainer";
+import { FileList } from "./FileContainer/FileContainer";
+import { AnnotationGroupList } from "./AnnotationGroupList/AnnotationGroupList";
+import { AnnotationListContainer } from "./AnnotationGroupList/AnnotationListContainer";
+import { AnnotationEditor } from "./FileContainer/AnnotationEditor/AnnotationEditor";
+import { storeGroup } from "../AppStoreGroup";
+import { BaseContainer } from "./BaseContainer";
+import { ConvertToAnnotationCollectionUseCase } from "../package/annotation/use-case/ConvertToAnnotationCollectionUseCase";
+import { FromResult } from "../package/annotation/AnnotationFactory";
 
 const { parse } = require("markdown-to-ast");
 
@@ -92,9 +94,9 @@ var a = 1;
 \`\`\`
 
 text.`;
-const fileAnnotationCollections: FileAnnotationCollection[] = [
+const fileAnnotationCollections: FromResult[] = [
     {
-        annotations: [
+        messages: [
             {
                 type: "lint",
                 ruleId: "file-size",
@@ -149,7 +151,7 @@ const fileAnnotationCollections: FileAnnotationCollection[] = [
         filePath: "/Users/azu/.ghq/github.com/textlint/textstat/packages/@textstat/textstat/README.md"
     },
     {
-        annotations: [
+        messages: [
             {
                 type: "lint",
                 ruleId: "file-size",
@@ -205,34 +207,40 @@ const fileAnnotationCollections: FileAnnotationCollection[] = [
     }
 ];
 
-// Define our app...
-export class App extends React.Component {
+export class App extends BaseContainer<typeof storeGroup.state> {
+    componentWillMount() {
+        this.useCase(new ConvertToAnnotationCollectionUseCase()).executor(useCase =>
+            useCase.execute(fileAnnotationCollections)
+        );
+    }
+
     render() {
-        const fileContainerList = fileAnnotationCollections.map(collection => {
-            return (
-                <FileContainer key={collection.filePath}>
-                    <FileHeader title={collection.filePath} />
-                    <AnnotationEditor
-                        text={collection.raw}
-                        parse={parse}
-                        annotations={collection.annotations}
-                        focusAnnotation={collection.annotations[0]}
-                    />
-                </FileContainer>
-            );
-        });
         return (
             <div className={"App"}>
-                <div className={"App-file"}>{fileContainerList}</div>
+                <div className={"App-file"}>
+                    <FileList
+                        fileAnnotationCollections={this.props.annotation.collections}
+                        render={collection => {
+                            return (
+                                <AnnotationEditor
+                                    text={collection.raw}
+                                    parse={parse}
+                                    annotations={collection.annotations}
+                                    focusAnnotation={collection.annotations[0]}
+                                />
+                            );
+                        }}
+                    />
+                </div>
                 <div className={"App-annotation"}>
                     <AnnotationGroupList
                         className={"App-annotationGroupList"}
-                        fileAnnotationCollections={fileAnnotationCollections}
+                        fileAnnotationCollections={this.props.annotation.collections}
                         render={fileAnnotationCollection => {
                             return (
                                 <AnnotationListContainer
                                     key={fileAnnotationCollection.filePath}
-                                    fileAnnotationCollection={fileAnnotationCollection}
+                                    annotationCollection={fileAnnotationCollection}
                                 />
                             );
                         }}

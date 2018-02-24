@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as path from "path";
 import { Annotation } from "../../package/annotation/Annotation";
 import { AnnotationCollection } from "../../package/annotation/AnnotationCollection";
 import { BaseContainer } from "../BaseContainer";
@@ -36,6 +35,7 @@ export class AnnotationListItem extends React.Component<AnnotationListItemProps,
 }
 
 export interface AnnotationListContainerProps {
+    title: string;
     annotationCollection: AnnotationCollection;
 }
 
@@ -59,14 +59,10 @@ export class AnnotationListContainer extends BaseContainer<AnnotationListContain
                 />
             );
         });
-        const shortFileName =
-            path.basename(path.dirname(fileAnnotationCollection.filePath)) +
-            path.sep +
-            path.basename(fileAnnotationCollection.filePath);
         return (
             <div className={"AnnotationListContainer"} key={fileAnnotationCollection.filePath}>
                 <header className={"AnnotationListContainer-header"}>
-                    <h2 className={"AnnotationListContainer-title"}>{shortFileName}</h2>
+                    <h2 className={"AnnotationListContainer-title"}>{this.props.title}</h2>
                 </header>
                 <ul className={"AnnotationList"}>{list}</ul>
             </div>

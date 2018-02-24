@@ -1,6 +1,5 @@
 import * as React from "react";
 import { FileList } from "./FileContainer/FileContainer";
-import { AnnotationGroupList } from "./AnnotationGroupList/AnnotationGroupList";
 import { AnnotationListContainer } from "./AnnotationGroupList/AnnotationListContainer";
 import { storeGroup } from "../AppStoreGroup";
 import { BaseContainer } from "./BaseContainer";
@@ -28,35 +27,29 @@ export class App extends BaseContainer<typeof storeGroup.state> {
         console.log(this.props.annotation);
         return (
             <div className={"App"}>
-                <div className={"App-file"}>
-                    <FileList
-                        fileAnnotationCollections={this.props.annotation.collections}
-                        render={collection => {
-                            return (
+                <FileList
+                    fileAnnotationCollections={this.props.annotation.collections}
+                    render={collection => {
+                        return (
+                            <div className={"App-file"}>
                                 <AnEditor
+                                    className={"App-editor"}
                                     text={collection.raw}
                                     parse={parse}
                                     annotations={collection.annotations}
                                     focusAnnotation={this.props.annotation.focusAnnotation}
                                 />
-                            );
-                        }}
-                    />
-                </div>
-                <div className={"App-annotation"}>
-                    <AnnotationGroupList
-                        className={"App-annotationGroupList"}
-                        fileAnnotationCollections={this.props.annotation.collections}
-                        render={fileAnnotationCollection => {
-                            return (
-                                <AnnotationListContainer
-                                    key={fileAnnotationCollection.filePath}
-                                    annotationCollection={fileAnnotationCollection}
-                                />
-                            );
-                        }}
-                    />
-                </div>
+                                <div className={"App-annotationList"}>
+                                    <AnnotationListContainer
+                                        title={"Annotations"}
+                                        key={collection.filePath}
+                                        annotationCollection={collection}
+                                    />
+                                </div>
+                            </div>
+                        );
+                    }}
+                />
             </div>
         );
     }

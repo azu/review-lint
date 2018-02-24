@@ -1,6 +1,8 @@
 /// <reference path="../../../../node_modules/monaco-editor/monaco.d.ts" />
 import * as React from "react";
+import * as classnames from "classnames";
 
+const ResizeObserver = require("react-resize-observer").default;
 const StructureSource = require("structured-source");
 declare namespace StructuredSource {
     interface SourcePosition {
@@ -36,6 +38,7 @@ import { Annotation } from "../../../package/annotation/Annotation";
 import { TxtParentNode } from "@textlint/ast-node-types";
 
 export interface AnEditorProps {
+    className?: string;
     text: string;
 
     parse(text: string): TxtParentNode;
@@ -122,25 +125,34 @@ export class AnEditor extends React.PureComponent<AnEditorProps> {
         this.monaco.editor.setModelMarkers(model, id, markers);
     };
 
+    private updateLayout = () => {
+        if (!this.component) {
+            return;
+        }
+        this.component.editor.layout();
+    };
+
     render() {
         const code = this.props.text;
         const options: monaco.editor.IEditorOptions = {
             wordWrap: "wordWrapColumn",
-            selectOnLineNumbers: true,
-            occurrencesHighlight: true
+            selectOnLineNumbers: true
         };
         return (
-            <MonacoEditor
-                ref={c => (this.component = c)}
-                width="100%"
-                height="600"
-                language="markdown"
-                theme="vs-dark"
-                value={code}
-                options={options}
-                onChange={this.onChange}
-                editorDidMount={this.editorDidMount}
-            />
+            <div className={classnames("AnEditor", this.props.className)}>
+                <ResizeObserver onResize={this.updateLayout} />
+                <MonacoEditor
+                    ref={c => (this.component = c)}
+                    width="100%"
+                    height="100%"
+                    language="markdown"
+                    theme="vs-dark"
+                    value={code}
+                    options={options}
+                    onChange={this.onChange}
+                    editorDidMount={this.editorDidMount}
+                />
+            </div>
         );
     }
 

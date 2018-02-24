@@ -1,0 +1,8 @@
+.AnnotationListContainer {
+    height: 100%;
+    overflow: auto;
+}
+
+.AnnotationList {
+    height: 100%;
+}

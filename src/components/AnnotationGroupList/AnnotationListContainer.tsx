@@ -59,12 +59,14 @@ export class AnnotationListContainer extends BaseContainer<AnnotationListContain
                 />
             );
         });
+        const shortFileName =
+            path.basename(path.dirname(fileAnnotationCollection.filePath)) +
+            path.sep +
+            path.basename(fileAnnotationCollection.filePath);
         return (
             <div className={"AnnotationListContainer"} key={fileAnnotationCollection.filePath}>
                 <header className={"AnnotationListContainer-header"}>
-                    <h2 className={"AnnotationListContainer-title"}>
-                        {path.basename(fileAnnotationCollection.filePath)}
-                    </h2>
+                    <h2 className={"AnnotationListContainer-title"}>{shortFileName}</h2>
                 </header>
                 <ul className={"AnnotationList"}>{list}</ul>
             </div>

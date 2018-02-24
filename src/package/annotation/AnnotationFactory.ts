@@ -42,8 +42,8 @@ export function convertToFileAnnotationCollection(result: FromResult): Annotatio
             ruleId: message.ruleId,
             message: message.message,
             severity: message.severity,
-            range: message.data.range,
-            details: message.data.details
+            range: message.data && message.data.range ? message.data.range : [message.index, message.index + 1],
+            details: message.data && message.data.details
         });
     });
     return new AnnotationCollection({

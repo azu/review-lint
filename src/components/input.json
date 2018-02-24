@@ -1,0 +1,992 @@
+[
+  {
+    "messages": [
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/ja-no-mixed-period",
+        "message": "文末が\"。\"で終わっていません。",
+        "index": 308,
+        "line": 10,
+        "column": 56,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "no-js-function-paren",
+        "message": "`fn()` should be written `fn`.",
+        "index": 333,
+        "line": 13,
+        "column": 1,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "no-js-function-paren",
+        "message": "`obj.method()` should be written `obj.method`.",
+        "index": 342,
+        "line": 13,
+        "column": 10,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/ja-no-mixed-period",
+        "message": "文末が\"。\"で終わっていません。",
+        "index": 386,
+        "line": 13,
+        "column": 54,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/ja-no-mixed-period",
+        "message": "文末が\"。\"で終わっていません。",
+        "index": 1611,
+        "line": 33,
+        "column": 26,
+        "severity": 2
+      }
+    ],
+    "filePath": "/Users/azu/.ghq/github.com/asciidwango/js-primer/source/basic/function-this/Notes.md",
+    "raw": "---\nauthor: azu\n---\n\n## Table\n\n- <https://azu.github.io/what-is-this/>\n- [azu/what-is-this: What value is `this` in Strict, Script, or Module?](https://github.com/azu/what-is-this \"azu/what-is-this: What value is `this` in Strict, Script, or Module?\")\n\nNotes: `const fn = () => this` はChrome64.0.3282.3では壊れている\n\nそれぞれの`this`の評価結果のまとめ。\n`fn()`または`obj.method()`をそれぞれの環境で実行した際の`this`の結果をまとめたもの\n\n- <https://azu.github.io/what-is-this/>\n\n| 実行環境   | Strict | コード                                      | 結果        |\n| ------ | ------ | ---------------------------------------- | --------- |\n| Script | NO     | `this`                                   | global    |\n| Script | NO     | `const fn = () => this`                  | global    |\n| Script | NO     | `const fn = function(){ return this; }`  | global    |\n| Script | YES    | `this`                                   | global    |\n| Script | YES    | `const fn = () => this`                  | global    |\n| Script | YES    | `const fn = function(){ return this; }`  | undefined |\n| Module | YES    | `this`                                   | undefined |\n| Module | YES    | `const fn = () => this`                  | undefined |\n| Module | YES    | `const fn = function(){ return this; }`  | undefined |\n| ＊      | ＊      | `const obj = { method(){ return this; } }` | `obj`     |\n| ＊      | ＊      | `const obj = { method: function(){ return this; } }` | `obj`     |\n| Script | ＊      | `const obj = { method: () => { return this; } }` | global    |\n| Module | ＊      | `const obj = { method: () => { return this; } }` | undefined |\n\n`＊`はどの場合でも結果に影響しないということを示す\n\n\n\n## Reference\n\n- https://tc39.github.io/ecma262/#sec-arrow-function-definitions-runtime-semantics-evaluation\n- https://esdiscuss.org/topic/clarification-regarding-top-level-arrow-functions-and-this-arguments\n"
+  },
+  {
+    "messages": [
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/ja-no-mixed-period",
+        "message": "文末が\"。\"で終わっていません。",
+        "index": 54,
+        "line": 8,
+        "column": 15,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "どういう => どのような",
+        "index": 160,
+        "line": 16,
+        "column": 4,
+        "severity": 2,
+        "fix": {
+          "range": [
+            160,
+            164
+          ],
+          "text": "どのような"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "どういう => どのような",
+        "index": 171,
+        "line": 16,
+        "column": 15,
+        "severity": 2,
+        "fix": {
+          "range": [
+            171,
+            175
+          ],
+          "text": "どのような"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/no-exclamation-question-mark",
+        "message": "Disallow to use \"?\".",
+        "index": 330,
+        "line": 25,
+        "column": 15,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 38 exceeds the maximum line length of 90.",
+        "index": 526,
+        "line": 38,
+        "column": 3,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 43 exceeds the maximum line length of 90.",
+        "index": 638,
+        "line": 43,
+        "column": 4,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 51 exceeds the maximum line length of 90.",
+        "index": 800,
+        "line": 51,
+        "column": 3,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 60 exceeds the maximum line length of 90.",
+        "index": 947,
+        "line": 60,
+        "column": 3,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/no-doubled-joshi",
+        "message": "一文に二回以上利用されている助詞 \"が\" がみつかりました。",
+        "index": 1562,
+        "line": 82,
+        "column": 48,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 82 exceeds the maximum line length of 90.",
+        "index": 1586,
+        "line": 82,
+        "column": 72,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 88 exceeds the maximum line length of 90.",
+        "index": 1680,
+        "line": 88,
+        "column": 3,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/no-doubled-joshi",
+        "message": "一文に二回以上利用されている助詞 \"は\" がみつかりました。",
+        "index": 1894,
+        "line": 95,
+        "column": 29,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "持つ => もつ",
+        "index": 2054,
+        "line": 103,
+        "column": 12,
+        "severity": 2,
+        "fix": {
+          "range": [
+            2054,
+            2056
+          ],
+          "text": "もつ"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "良い => よい",
+        "index": 2251,
+        "line": 108,
+        "column": 32,
+        "severity": 2,
+        "fix": {
+          "range": [
+            2251,
+            2253
+          ],
+          "text": "よい"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 114 exceeds the maximum line length of 90.",
+        "index": 2404,
+        "line": 114,
+        "column": 26,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "Strict Mode => strict mode",
+        "index": 2449,
+        "line": 115,
+        "column": 4,
+        "severity": 2,
+        "fix": {
+          "range": [
+            2449,
+            2460
+          ],
+          "text": "strict mode"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 125 exceeds the maximum line length of 90.",
+        "index": 2640,
+        "line": 125,
+        "column": 3,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/no-doubled-conjunction",
+        "message": "同じ接続詞が連続して使われています。",
+        "index": 2734,
+        "line": 129,
+        "column": 5,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 132 exceeds the maximum line length of 90.",
+        "index": 2816,
+        "line": 132,
+        "column": 3,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 137 exceeds the maximum line length of 90.",
+        "index": 2928,
+        "line": 137,
+        "column": 4,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 145 exceeds the maximum line length of 90.",
+        "index": 3090,
+        "line": 145,
+        "column": 3,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 154 exceeds the maximum line length of 90.",
+        "index": 3237,
+        "line": 154,
+        "column": 3,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 181 exceeds the maximum line length of 90.",
+        "index": 3898,
+        "line": 181,
+        "column": 3,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/no-doubled-joshi",
+        "message": "一文に二回以上利用されている助詞 \"は\" がみつかりました。",
+        "index": 4112,
+        "line": 188,
+        "column": 29,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "持つ => もつ",
+        "index": 4272,
+        "line": 196,
+        "column": 12,
+        "severity": 2,
+        "fix": {
+          "range": [
+            4272,
+            4274
+          ],
+          "text": "もつ"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "良い => よい",
+        "index": 4469,
+        "line": 201,
+        "column": 32,
+        "severity": 2,
+        "fix": {
+          "range": [
+            4469,
+            4471
+          ],
+          "text": "よい"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/ja-no-mixed-period",
+        "message": "文末が\"。\"で終わっていません。",
+        "index": 4511,
+        "line": 205,
+        "column": 19,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "period-in-list-item",
+        "message": "Should remove period mark(\"。\") at end of list item.",
+        "index": 4660,
+        "line": 210,
+        "column": 70,
+        "severity": 2,
+        "fix": {
+          "range": [
+            4660,
+            4661
+          ],
+          "text": ""
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/no-doubled-joshi",
+        "message": "一文に二回以上利用されている助詞 \"は\" がみつかりました。",
+        "index": 4823,
+        "line": 216,
+        "column": 26,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 223 exceeds the maximum line length of 90.",
+        "index": 4974,
+        "line": 223,
+        "column": 4,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 229 exceeds the maximum line length of 90.",
+        "index": 5095,
+        "line": 229,
+        "column": 3,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 248 exceeds the maximum line length of 90.",
+        "index": 5434,
+        "line": 248,
+        "column": 3,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "(Array系) => （Array系）",
+        "index": 5481,
+        "line": 251,
+        "column": 17,
+        "severity": 2,
+        "fix": {
+          "range": [
+            5481,
+            5489
+          ],
+          "text": "（Array系）"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 259 exceeds the maximum line length of 90.",
+        "index": 5612,
+        "line": 259,
+        "column": 3,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/max-ten",
+        "message": "一つの文で\"、\"を3つ以上使用しています",
+        "index": 5694,
+        "line": 261,
+        "column": 8,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "period-in-list-item",
+        "message": "Should remove period mark(\"。\") at end of list item.",
+        "index": 5732,
+        "line": 261,
+        "column": 46,
+        "severity": 2,
+        "fix": {
+          "range": [
+            5732,
+            5733
+          ],
+          "text": ""
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/ja-no-mixed-period",
+        "message": "文末が\"。\"で終わっていません。",
+        "index": 6293,
+        "line": 271,
+        "column": 57,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 282 exceeds the maximum line length of 90.",
+        "index": 6467,
+        "line": 282,
+        "column": 61,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "持つ => もつ",
+        "index": 6500,
+        "line": 283,
+        "column": 33,
+        "severity": 2,
+        "fix": {
+          "range": [
+            6500,
+            6502
+          ],
+          "text": "もつ"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 291 exceeds the maximum line length of 90.",
+        "index": 6695,
+        "line": 291,
+        "column": 14,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/ja-no-mixed-period",
+        "message": "文末が\"。\"で終わっていません。",
+        "index": 7324,
+        "line": 320,
+        "column": 37,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "(ただの関数呼び出し) => （ただの関数呼び出し）",
+        "index": 8208,
+        "line": 337,
+        "column": 7,
+        "severity": 2,
+        "fix": {
+          "range": [
+            8208,
+            8219
+          ],
+          "text": "（ただの関数呼び出し）"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 345 exceeds the maximum line length of 90.",
+        "index": 8430,
+        "line": 345,
+        "column": 23,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/max-ten",
+        "message": "一つの文で\"、\"を3つ以上使用しています",
+        "index": 8572,
+        "line": 348,
+        "column": 7,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 359 exceeds the maximum line length of 90.",
+        "index": 8757,
+        "line": 359,
+        "column": 4,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 374 exceeds the maximum line length of 90.",
+        "index": 9045,
+        "line": 374,
+        "column": 63,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "(引数に渡さない) => （引数に渡さない）",
+        "index": 9078,
+        "line": 375,
+        "column": 33,
+        "severity": 2,
+        "fix": {
+          "range": [
+            9078,
+            9087
+          ],
+          "text": "（引数に渡さない）"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "(関数) => （関数）",
+        "index": 9132,
+        "line": 375,
+        "column": 87,
+        "severity": 2,
+        "fix": {
+          "range": [
+            9132,
+            9136
+          ],
+          "text": "（関数）"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "一つ => ひとつ",
+        "index": 9434,
+        "line": 387,
+        "column": 4,
+        "severity": 2,
+        "fix": {
+          "range": [
+            9434,
+            9436
+          ],
+          "text": "ひとつ"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/arabic-kanji-numbers",
+        "message": "一つ => 1つ\n数量を表現し、数を数えられるものは算用数字を使用します。任意の数に置き換えても通用する語句がこれに該当します。",
+        "index": 9434,
+        "line": 387,
+        "column": 4,
+        "severity": 2,
+        "fix": {
+          "range": [
+            9434,
+            9436
+          ],
+          "text": "1つ"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "出来る => できる",
+        "index": 9438,
+        "line": 387,
+        "column": 8,
+        "severity": 2,
+        "fix": {
+          "range": [
+            9438,
+            9441
+          ],
+          "text": "できる"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/no-mix-dearu-desumasu",
+        "message": "本文: \"である\"調 と \"ですます\"調 が混在\n=> \"である。\" がである調\nTotal:\nである  : 2\nですます: 3\n",
+        "index": 9504,
+        "line": 387,
+        "column": 74,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/no-mix-dearu-desumasu",
+        "message": "本文: \"である\"調 と \"ですます\"調 が混在\n=> \"である。\" がである調\nTotal:\nである  : 2\nですます: 3\n",
+        "index": 9546,
+        "line": 388,
+        "column": 38,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "eslint",
+        "message": "Parsing error: Unexpected token =>",
+        "index": 9897,
+        "line": 410,
+        "column": 19,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "の時 => のとき",
+        "index": 9916,
+        "line": 413,
+        "column": 2,
+        "severity": 2,
+        "fix": {
+          "range": [
+            9916,
+            9918
+          ],
+          "text": "のとき"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/ja-no-mixed-period",
+        "message": "文末が\"。\"で終わっていません。",
+        "index": 9939,
+        "line": 413,
+        "column": 25,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "no-js-function-paren",
+        "message": "`m()` should be written `m`.",
+        "index": 9956,
+        "line": 415,
+        "column": 15,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "の時 => のとき",
+        "index": 10091,
+        "line": 418,
+        "column": 5,
+        "severity": 2,
+        "fix": {
+          "range": [
+            10091,
+            10093
+          ],
+          "text": "のとき"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "何故 => なぜ",
+        "index": 10420,
+        "line": 427,
+        "column": 5,
+        "severity": 2,
+        "fix": {
+          "range": [
+            10420,
+            10422
+          ],
+          "text": "なぜ"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/no-exclamation-question-mark",
+        "message": "Disallow to use \"?\".",
+        "index": 10440,
+        "line": 427,
+        "column": 25,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "period-in-list-item",
+        "message": "Should remove period mark(\"。\") at end of list item.",
+        "index": 10955,
+        "line": 432,
+        "column": 25,
+        "severity": 2,
+        "fix": {
+          "range": [
+            10955,
+            10956
+          ],
+          "text": ""
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/no-exclamation-question-mark",
+        "message": "Disallow to use \"?\".",
+        "index": 10978,
+        "line": 434,
+        "column": 21,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/ja-no-mixed-period",
+        "message": "文末が\"。\"で終わっていません。",
+        "index": 11105,
+        "line": 443,
+        "column": 12,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/no-exclamation-question-mark",
+        "message": "Disallow to use \"?\".",
+        "index": 11239,
+        "line": 449,
+        "column": 23,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "基づく => もとづく",
+        "index": 11251,
+        "line": 450,
+        "column": 11,
+        "severity": 2,
+        "fix": {
+          "range": [
+            11251,
+            11254
+          ],
+          "text": "もとづく"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "() や apply() => （) や apply(）",
+        "index": 11371,
+        "line": 455,
+        "column": 7,
+        "severity": 2,
+        "fix": {
+          "range": [
+            11371,
+            11383
+          ],
+          "text": "（) や apply(）"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "基づく => もとづく",
+        "index": 11992,
+        "line": 478,
+        "column": 10,
+        "severity": 2,
+        "fix": {
+          "range": [
+            11992,
+            11995
+          ],
+          "text": "もとづく"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/no-dropping-the-ra",
+        "message": "ら抜き言葉を使用しています。",
+        "index": 12161,
+        "line": 491,
+        "column": 24,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "eslint",
+        "message": "indent: Expected indentation of 4 spaces but found 0.",
+        "index": 12223,
+        "line": 499,
+        "column": 1,
+        "severity": 2,
+        "fix": {
+          "range": [
+            12223,
+            12223
+          ],
+          "text": "    "
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "eslint",
+        "message": "quotes: Strings must use doublequote.",
+        "index": 12229,
+        "line": 499,
+        "column": 7,
+        "severity": 2,
+        "fix": {
+          "range": [
+            12229,
+            12238
+          ],
+          "text": "\"Wallace\""
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "eslint",
+        "message": "indent: Expected indentation of 4 spaces but found 0.",
+        "index": 12240,
+        "line": 500,
+        "column": 1,
+        "severity": 2,
+        "fix": {
+          "range": [
+            12240,
+            12240
+          ],
+          "text": "    "
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "eslint",
+        "message": "brace-style: Statement inside of curly braces should be on next line.",
+        "index": 12248,
+        "line": 500,
+        "column": 9,
+        "severity": 2,
+        "fix": {
+          "range": [
+            12249,
+            12249
+          ],
+          "text": "\n"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "eslint",
+        "message": "brace-style: Closing curly brace should be on the same line as opening curly brace or on the line after the previous block.",
+        "index": 12285,
+        "line": 500,
+        "column": 46,
+        "severity": 2,
+        "fix": {
+          "range": [
+            12285,
+            12285
+          ],
+          "text": "\n"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "eslint",
+        "message": "semi: Missing semicolon.",
+        "index": 12289,
+        "line": 500,
+        "column": 50,
+        "severity": 2,
+        "fix": {
+          "range": [
+            12289,
+            12289
+          ],
+          "text": ";"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/sentence-length",
+        "message": "Line 510 exceeds the maximum line length of 90.",
+        "index": 12407,
+        "line": 510,
+        "column": 3,
+        "severity": 2
+      },
+      {
+        "type": "lint",
+        "ruleId": "preset-ja-technical-writing/ja-no-redundant-expression",
+        "message": "\"することができませ\"は冗長な表現です。\"することが\"を省き簡潔な表現にすると文章が明瞭になります。参考: http://qiita.com/takahi-i/items/a93dc2ff42af6b93f6e0",
+        "index": 12699,
+        "line": 523,
+        "column": 32,
+        "severity": 2,
+        "fix": {
+          "range": [
+            12699,
+            12708
+          ],
+          "text": "できませ"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "prh",
+        "message": "同じ変数を => 同じ変数名を",
+        "index": 12724,
+        "line": 524,
+        "column": 15,
+        "severity": 2,
+        "fix": {
+          "range": [
+            12724,
+            12729
+          ],
+          "text": "同じ変数名を"
+        }
+      },
+      {
+        "type": "lint",
+        "ruleId": "period-in-list-item",
+        "message": "Should remove period mark(\".\") at end of list item.",
+        "index": 12792,
+        "line": 528,
+        "column": 16,
+        "severity": 2,
+        "fix": {
+          "range": [
+            12792,
+            12793
+          ],
+          "text": ""
+        }
+      }
+    ],
+    "filePath": "/Users/azu/.ghq/github.com/asciidwango/js-primer/source/basic/function-this/OUTLINE.md",
+    "raw": "\n\n\n\n# 関数オブジェクトとthis\n\n目的: 関数のメソッドについてを紹介\n目的: thisについてを紹介\n\n## もっと具体的な目標\n\n- 関数の定義方法の振り返り\n\t- function宣言、function式、Arrow Function\n\t- nameの関係\n- `this`の動きについてを理解する\n\t- どういうときに使われ、どういう動きをするのか\n- 特殊な`this`動きを関数として回避する方法について\n\t- `var that = this`とArrow Functionon\n\n\t- メソッドとしてのcall/apply/bindについて\n\n## 書かないこと\n\n- newとthisの関係 => クラス\n- Promiseとthis?\n- jQuery、Vue\n\n## アウトライン\n\n### アウトラインパターン1\n\n- タイトル: 関数と`this`\n- 目的: `this`にはいくつか扱いがあり、それぞれの動作についてを理解する\n- 目的: `this`の原理についてを理解する\n- 目的: クラスにおける用法へ備える\n- thisは特別なキーワード\n\t- オブジェクトのように振る舞うがthisは読み取り専用\n- thisは暗黙的\n\t- argumentsのように呼び出し元によってどのような値になるかが決まる\n\t- 関数はargumentsを束縛する\n\t- thisは暗黙的だから使う\n\t- ただしArrow Functionは\n- `this`という話\n\t- ThisModeという視点だと`this`は三種類\n\t\t- `global` = undefined\n\t\t- `strict` = dynamic\n\t\t- `lexical` = static/Arrow Function\n- グローバルと`this`\n\t- Script\n\t- Module\n- 関数と`this`\n\t- 関数の定義方法\n\t\t- Functionキーワード\n\t\t- Arrow Function\n\t- メソッドの定義方法\n\t\t- 関数式\n\t\t- 短縮記法\n\t\t- Arrow Function\n\t- thisにおいてはArrow Functionとそれ以外に分類される\n- Arrow Function以外の関数\n\t- 関数では`this`は動的に決定される\n\t- 基本ルール: `this`はベースオブジェクトを示す\n\t- ベースオブジェクトは関数の呼び方のときのオブジェクトのこと\n\t- `this`はあくまで実行時に決まる\n\t\t- これは関数を実行するときにその関数の環境へ`this`の値が設定される\n\t\t- つまり `fn(this = XXX, 実際の引数)`というように呼ばれている\n\t- 関数宣言における`this`\n\t\t- ネストした場合の`this`\n\t\t\t- 所属するオブジェクトとは「ドット演算あるいはブラケット演算でオブジェクトのメソッドを呼んだ時、演算子の左辺に指定したオブジェクト」\n\t\t\t- 関数宣言/関数定義における`this`\n\t- メソッドにおける`this`\n\t\t- メソッドにおいては`this`はベースオブジェクトを示す\n\t\t- 短縮記法のメソッドも同じ\n\t\t- ネストしたメソッドの場合\n\t- `this`が問題となるパターン\n\t\t- 問題: メソッドを変数に代入した場合\n\t\t\t- 対処法:\n\t\t\t\t- thisを使わない\n\t\t\t\t- メソッドはメソッドとして呼ぶ\n\t\t\t\t- call,apply,bindする\n\t\t- 問題: コールバック関数と`this`\n\t\t\t- 問題: コールバック関数の中で`this`を参照するとその`this`が参照するものが代わっていることに気づきにくい問題があります。\n\t\t\t- 対処法:\n\t\t\t\t- `this`を変数に代入して参照を保持する\n\t\t\t\t\t- `that = this`\n\t\t\t\t- bind\n\t\t\t\t- Arrow Function\n- Arrow Function\n\t- Arrow Functionでは`this`は静的モードとなる\n\t- 暗黙的ではなく、静的に`this`が決まる\n\t- 1つ外側の関数における`this`の値となる\n\t\t- 外側の関数がない場合はグローバルオブジェクト or undefinedとなる\n\t- また`arguments`も束縛しない\n\t- `this`とスコープチェーン\n\t\t- Arrow Functionの場合は`this`は設定できないので、スコープチェーンのように外側のスコープへ探索していく\n\t- 関数呼び出し\n\t\t- グローバルオブジェクト or undeined\n\t- 関数の入れ子\n\t\t- これも関数呼び出しなので同じ\n\t- メソッド呼び出し\n\t\t- メソッド呼び出しの\n\t- コールバック関数と`this`\n\t\t- `this`を持つコールバック関数にはArrow Functionを使うことで問題を回避できる\n\t- call,apply,bindは効かない\n\t\t- `If thisMode is lexical, return NormalCompletion(undefined).`という回避ステップがある\n- 結論\n\t- メソッドはメソッドとして呼ぶ\n\t- コールバック関数はArrow Functionを使うこと良い\n- 未使用\n\t- 関数\n\t\t- `argument`、`super`、`this`、`new.target`を束縛\n\t- Arrow Function\n\t\t- `argument`、`super`、`this`、`new.target`を束縛しない\n\t\t- <https://tc39.github.io/ecma262/#prod-asi-rules-ArrowFunction>\n\t- Strict Mode、Module Contextの細かい違い\n\t\t- Top Levelの`this`が違う\n\n\n### アウトラインパターン -メソッドのみ\n\n- タイトル: メソッドと`this`\n- 目的: `this`にはいくつか扱いがあり、それぞれの動作についてを理解する\n- 目的: `this`の原理についてを理解する\n- 目的: クラスにおける用法へ備える\n- thisはメソッド用\n\t- 元々OOPのものとして導入された\n\t- しかし、JavaScriptでは関数とメソッドの区別がない\n\t- そのため、`this`はどこでも使えてしまう\n\t- しかし、現実的には`this`はメソッドの中でのみ利用するキーワード\n- thisは特別なキーワード\n\t- オブジェクトのように振る舞うがthisは読み取り専用\n- thisは暗黙的\n\t- argumentsのように呼び出し元によってどのような値になるかが決まる\n\t- 関数はargumentsを束縛する\n\t- thisは暗黙的だから使う\n\t- ただしArrow Functionは\n- `this`という話\n\t- ThisModeという視点だと`this`は三種類\n\t\t- `global` = undefined\n\t\t- `strict` = dynamic\n\t\t- `lexical` = static/Arrow Function\n- グローバルと`this`\n\t- Script\n\t- Module\n- 関数と`this`\n\t- 関数の定義方法\n\t\t- Functionキーワード\n\t\t- Arrow Function\n\t- メソッドの定義方法\n\t\t- 関数式\n\t\t- 短縮記法\n\t\t- Arrow Function\n\t- thisにおいてはArrow Functionとそれ以外に分類される\n- Arrow Function以外の関数\n\t- 関数では`this`は動的に決定される\n\t- 基本ルール: `this`はベースオブジェクトを示す\n\t- ベースオブジェクトは関数の呼び方のときのオブジェクトのこと\n\t- `this`はあくまで実行時に決まる\n\t\t- これは関数を実行するときにその関数の環境へ`this`の値が設定される\n\t\t- つまり `fn(this = XXX, 実際の引数)`というように呼ばれている\n\t- 関数宣言における`this`\n\t\t- ネストした場合の`this`\n\t\t\t- 所属するオブジェクトとは「ドット演算あるいはブラケット演算でオブジェクトのメソッドを呼んだ時、演算子の左辺に指定したオブジェクト」\n\t\t\t- 関数宣言/関数定義における`this`\n\t- メソッドにおける`this`\n\t\t- メソッドにおいては`this`はベースオブジェクトを示す\n\t\t- 短縮記法のメソッドも同じ\n\t\t- ネストしたメソッドの場合\n\t- `this`が問題となるパターン\n\t\t- 問題: メソッドを変数に代入した場合\n\t\t\t- 対処法:\n\t\t\t\t- thisを使わない\n\t\t\t\t- メソッドはメソッドとして呼ぶ\n\t\t\t\t- call,apply,bindする\n\t\t- 問題: コールバック関数と`this`\n\t\t\t- 対処法:\n\t\t\t\t- `this`を変数に代入して参照を保持する\n\t\t\t\t\t- `that = this`\n\t\t\t\t- bind\n\t\t\t\t- Arrow Function\n- Arrow Function\n\t- Arrow Functionでは`this`は静的モードとなる\n\t- 暗黙的ではなく、静的に`this`が決まる\n\t- 1つ外側の関数における`this`の値となる\n\t\t- 外側の関数がない場合はグローバルオブジェクト or undefinedとなる\n\t- また`arguments`も束縛しない\n\t- `this`とスコープチェーン\n\t\t- Arrow Functionの場合は`this`は設定できないので、スコープチェーンのように外側のスコープへ探索していく\n\t- 関数呼び出し\n\t\t- グローバルオブジェクト or undeined\n\t- 関数の入れ子\n\t\t- これも関数呼び出しなので同じ\n\t- メソッド呼び出し\n\t\t- メソッド呼び出しの\n\t- コールバック関数と`this`\n\t\t- `this`を持つコールバック関数にはArrow Functionを使うことで問題を回避できる\n\t- call,apply,bindは効かない\n\t\t- `If thisMode is lexical, return NormalCompletion(undefined).`という回避ステップがある\n- 結論\n\t- メソッドはメソッドとして呼ぶ\n\t- コールバック関数はArrow Functionを使うこと良い\n\n### アウトライン - パターン2\n\nArrow Functionを前にだす\n\n- タイトル: 関数と`this`\n- 目的: `this`についてを理解する\n- 目的: Arrow Functionと`this`についてを理解する\n- 目的: `this`には3種類の扱いがあり、既存のコードではArrow Function以外での`this`があるため、それを理解する。\n- thisは特別なキーワード\n\t- オブジェクトのように振る舞うがthisは読み取り専用\n\t- thisは利用する場所、関数の宣言方法、関数の呼び出し方によって異なる値となります\n- グローバルと`this`\n\t- strict modeは常にundefinedとなる\n\t- [コラム] strict modeはない場合はグローバルオブジェクトを返す\n- Arrow Functionと`this`\n\t- Arrow Function\n- thisは暗黙的\n\t- argumentsのように呼び出し元によってどのような値になるかが決まる\n\t- thisは暗黙的だから使う\n\t- ただしArrow Functionは\n- `this`という話\n\t- ThisModeという視点だと`this`は三種類\n\t\t- `global` = undefined\n\t\t- `strict` = dynamic\n\t\t- `lexical` = Arrow Function\n\n- 関数と`this`\n\t- 関数の定義方法\n\t\t- Functionキーワード\n\t\t- Arrow Function\n\t- メソッドの定義方法\n\t\t- 関数式\n\t\t- 短縮記法\n\t\t- Arrow Function\n\t- thisにおいてはArrow Functionとそれ以外に分類される\n- 関数\n\t- `function`キーワード\n\t- 短縮記法のメソッド\n\t- これらにおける`this`は暗黙的\n\t- 明示的にするにはcall bind applyが利用できる\n- Arrow Function\n- thisとFunctionキーワード\n\t- var that = this\n- thisとArrow Function\n\t- thisがlexicalモードになる\n- thisを決めて関数を呼ぶ\n\t- call\n\t- apply\n\t- 3rd arguments(Array系))\n\t- bind\n\t- `this`はこの影響を受けない\n\t\t- `If thisMode is lexical, return NormalCompletion(undefined).`という回避ステップがある\n\n\n## パターン 3\n\n- 目的: 仕様的な定義をちゃんと解説していく\n\t- `this`はクラスで使用するものだが、元々は関数がある概念で、その動作は関数とクラスに違いはない\n\t- そのため、まずは関数やオブジェクトにおいて`this`を学び、その後クラスを見ていく。\n- Arrow Functionは `[[ThisMode]]` が Lexicalな関数という定義\n\t- つまり、`this`が静的に決まることを保証した関数を作る\n- 他の`function`キーワードは`[[ThisMode]]`がstrictであるという関数の定義\n\t- つまり、`this`は動的に決まると関数を作る\n- \n\n> Like we said, in the global context the this value is the global object (the binding object of the global environment record). Previously there was only one global object. In current version of the spec there might be multiple global objects which are part of code realms. Let’s discuss this structure.\n\n現在実行している処理のグローバルオブジェクトを示します。\nグローバルオブジェクトは実行艦橋に寄って異なりますがwindowやnOde,jsならglobalなどが該当します、\n\n\n----\n\n\n- 未使用\n\t-  thisとクラス\n\t\t- クラスでのthisはとても良く見る形\n\t- 関数はオブジェクトです。`Function`オブジェクト\n\t- オブジェクトの中で呼び出せるものを関数と読んでいる\n\t- しかし、`typeof`はfunctionであるため関数がオブジェクトであることは。強く意識する必要はありません。\n\t- 文字列や配列のように`Function`オブジェクトだけが持つメソッドやプロパティについて紹介\n\t- また、その中でも`bind`、`call`、`apply`メソッドに関連する`this`というキーワードについてを紹介します。\n\t- プロパティ\n\t- `Function.name`\n\t- メソッド\n\t- `toString`\n\t- [コラム] リフレクションはproductionで使えない\n\t- あくまでデバッグ用\n\t- [Function.name - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Function/name \"Function.name - JavaScript | MDN\")\n\t- this\n\t- thisとはなにか\n\t- Arrow FunctionとFunction式による違い\n\t- thisのサンプル\n\n\n### thisとクラス\n\n`this`はクラスで使われることが多い特別なキーワードです。\nクラスのインスタンスを`this`で示すことができます。\nしかし、JavaScriptでは`class`そのものがES2015で導入された後付の概念です。\n`this`はES2015よりも前から存在し、その動作は関数とクラスにおいて違いはありません。\nなぜならクラスも関数の一種にすぎないためです。クラスについては次の章で解説します。\n\n```js\nclass K {}\n```\n\nそのため、`this`の動作原理について関数と`this`についてを学ぶことで、クラスについてもそのまま応用できます。\nこの章では関数における`this`についてを学んでいきます。\n\n\n\t- getter/setterについて\n\n\n## thisの名前解決の仕様\n\n\n`this` bindingの設定は関数を呼ぶときに次のルートで決定される\n\n- https://tc39.github.io/ecma262/#sec-evaluatecall\n- https://tc39.github.io/ecma262/#sec-call\n- https://tc39.github.io/ecma262/#sec-ecmascript-function-objects-call-thisargument-argumentslist\n- https://tc39.github.io/ecma262/#sec-ordinarycallbindthis\n\nWrite: 関数呼び出するときに、事前に`[[ThisValue]]`を決める処理が実行される。\n`[[ThisValue]]`には次のステップの結果が入る。(ただしArrow Functionはlexicalなので`[[ThisValue]]`を持たない。[Arrow Functionの詳細](https://tc39.github.io/ecma262/#sec-ordinarycallbindthis))\n\n- [12.3.4.2Runtime Semantics: EvaluateCall(func, ref, arguments, tailPosition )](https://tc39.github.io/ecma262/#sec-evaluatecall \"12.3.4.2Runtime Semantics: EvaluateCall(func, ref, arguments, tailPosition )\")\n- プロパティならば\n\t- `this`はGetThisValueの結果\n\t\t- `super.prop`なら\n\t\t\t- `super`となる\n\t\t- それ以外なら\n\t\t\t- [6.2.4.1GetBase ( V )](https://tc39.github.io/ecma262/#sec-getbase \"6.2.4.1GetBase ( V )\")の結果 - いわゆるレシーバが`this`となる\n- それ以外(ただの関数呼び出し)なら[WithBaseObject](https://tc39.github.io/ecma262/#sec-object-environment-records-withbaseobject)の結果\n\t- withの場合\n\t\t- with bingingの値\n\t- それ以外\n\t\t- undefined\n\nRead: `this`を読み取るときは、次のステップで探索する。\n\n- https://tc39.github.io/ecma262/#sec-getthisenvironment\n\t- `this`の解決はスコープと同じく、一個つづ順に内側から外側へ探すのはスコープと同じ\n\t- ただし、Arrow Functionは`[[ThisValue]]`を持たないので必ずスキップされる\n\t- つまり、もっと近いコンテキストの`[[ThisValue]]`の値が`this`となる\n\n## 簡略化した説明\n\n-  Arrow Function以外の関数においては\n\t- thisの値はその関数が所属していたオブジェクトとなる\n- Arrow Functionにおいては\n\t- <del>1つ外側の関数またはグローバルオブジェクトとなる</del>\n\n## 説明\n\n-  Arrow Function以外の関数において\n\t- `var`はグローバルオブジェクトに変数が付く => windowになる\n\t- `const`はグローバルではなくその下のLexical Envに変数が付く => undefinedになる\n- Arrow Functionにおいては\n\t- グローバル\n\t- or 関数\n\n\n\n## Note\n\n\n### `this`は暗黙的な引数\n\n関数においては`this`は暗黙的に渡されるような引数となる。\nつまり`fn`という関数を呼ぶときに自動で`this`を`fn(実際の引数, this = XXX)` のように渡している。\n一方、Arrow Functionの場合は`this`を持たない(引数に渡さない)ため、そのArrow Functionの中では`this`はスコープチェーンのように外側の(関数)スコープへ探索する。\n(スコープチェーンとは異なり、`this`は関数スコープまたはグローバルスコープにしか定義されていないため、関数スコープを辿るような挙動をする)\n\n仕様としても`[[Call]]`には`this`を引数として渡している。\nこれは`call`メソッドを使うことで明示的に渡すことができる。\n\n- https://tc39.github.io/ecma262/#sec-call\n\n\n### `this` in the future\n\n個人の感想としては関数(`function`)やオブジェクトのメソッドにおいて`this`を積極的に利用する理由はあまりないと考える。\n引数を一つ省略出来るという見た目上の美しさがありデザインパターンとして使われることがあるが、それ以上にthisは動的かつ暗黙的だから難しくなるためである。\nこの書籍では、芸術的に書くよりも読んで分かる書いても分かるものを目指すべきである。\n\n- https://github.com/tc39/proposal-bind-operator\n- `this`のダイナミックさを最大限活用しようとしたProposal\n- https://github.com/tc39/proposal-pipeline-operator\n- 一方のpipeline operatorは`this`がない\n\n\n### FAQ\n\n\n### オブジェクトのメソッド内のArrow Functionのthis\n\n```js\n\"use strict\";\nvar o = {\n\tm(){\n\t   var inner = () => this;\n       return inner();\n\t}\n}\nvar m = o.m;\nconsole.log(m()); => undefined\n```\n\nこの時の`this`がなぜundeinedになるか\n\n1. `o.m` ではなく `m()`で実行されている\n2. `m`は関数なので、実行するときに`m`のFunction Envの`[[ThisValue]]`には値が設定される\n\t3. <https://tc39.github.io/ecma262/#sec-evaluatecall>\n3. この時の`[[ThisValue]]`は`m`がプロパティではないので、`Let thisValue be refEnv.WithBaseObject().`となる\n\t4. `WithBaseObject`は`with`じゃないなら`undefined`となる\n5. つまり`thisValue`は`undefined`となる\n6. そして、`inner`を実行する\n7. `inner`はArrow Functionなので、`[[ThisValue]]`を設定できない\n8. `inner`における`this`は、自身の外側の関数の`[[ThisValue]]`となる\n9. つまり、先ほど設定した`undefined`が`this`の値となる\n\n\n### 何故 () => this global?\n\n- [ecmascript 6 - use strict in javascript not working for fat arrow? - Stack Overflow](https://stackoverflow.com/questions/36427862/use-strict-in-javascript-not-working-for-fat-arrow \"ecmascript 6 - use strict in javascript not working for fat arrow? - Stack Overflow\")\n- <https://github.com/anba/es6draft/blob/7e196e8a1482384ca83946998f5fbd22068b47c6/src/main/java/com/github/anba/es6draft/runtime/GlobalEnvironmentRecord.java#L194-L202>\n- GlobalEnvはhasThisBindingが`true`なのでthisの対象になる。\n\t- 最終的にthis lookupの最後になる。\n\n### `this`は暗黙的な引数ですか?\n\nYES\n\n- <https://tc39.github.io/ecma262/#sec-call>\n- `[[Call]]`において暗黙的渡された`V`が`This`です\n\n## 開眼JavaScriptの`this`の章\n\n開眼JavaScript\n\n- this とは何か、および this は何を参照するか\n\t- `obj.method` を `this.method`に置き換える例\n\t- `this`は混乱する\n\t- new、call,apply,bindは別\n- this の値はどのように決められるのか?\n\t- コンテキストに基づく\n- 入れ子関数内では、this は グローバルオブジェクトを参照する\n\t- ES5で直るパターン\n- 入れ子関数内で this を見失う問題を スコープチェーンを使って回避する\n\t- `var that = this`\n- call() や apply() を使って this の値を コントロールする\n- this キーワードをユーザ定義の コンストラクタ関数で使う\n\t- newは特別\n- プロトタイプメソッド内の this は 生成されるインスタンスを参照する\n\n## ['this' in TypeScript · Microsoft/TypeScript Wiki](https://github.com/Microsoft/TypeScript/wiki/'this'-in-TypeScript \"&#39;this&#39; in TypeScript · Microsoft/TypeScript Wiki\")\n\n- `this`がどのような問題を持っているか\n- その問題となる実例\n\t- Event Listener\n\t- コールバック\n\t- オプションオブジェクト\n\t- Promiseなど\n- その中でも特に間違いが多いRed Flagsの例\n\t- 代入\n\t- イベント\n- 問題の解決方法について\n\t- public method = () => {}\n\t- local () => {}\n\t- Function bind\n\n## [This in JavaScript | Zell Liew](https://zellwk.com/blog/this/ \"This in JavaScript | Zell Liew\")\n\n- コンテキストに基づく`this`の動きについて\n\n----\n\n\n## 初めてのJavaScript\n\n- thisはread-only\n- thisは通常bindする\n- thisは呼び出され方に依存する\n\t- 説明的なthisコード\n- メソッにおけるthis\n\t- self = thisでのbind\n\t- これはArrow Functionで避けれるよ\n- Arrow Function\n- call\n- apply\n- bind\n\n```js\nconst o = {\nname: 'Wallace',\nspeak() { return `My name is ${this.name}!`; }, }\n```\n\n\n## パーフェクトJavaScript\n\n- thisは読み取り専用の変数\n- どこからでも使える\n\t- Javaとかではメソッドに暗黙的に渡す引数とみなせる\n\t- JavaScriptではグローバルや関数でも使える\n- thisの参照の規則\n\t- 関数内でのthisの参照規則\n\t- コンストラクタ: 生成したオブジェクト\n\t- メソッド呼び出し: レシーバーオブジェクト\n\t- apply、call: 指定したオブジェクト\n\t- それ以外: グローバル\n- レシーバーとは、ドット演算子あるブラケット演算子の左辺にしたオブジェクトです\n- thisは呼び出し元によって決まる\n- thisの注意点\n- クラスベースでは基本的にはレシーバーはクラスのインスタンス\n- 恣意的な例\n\t- `var m = obj.m`\n\t- グローバルになる\n- JavaScriptでは実行時にthisが決まるため、省略することができません\n\t- 省略するとその識別子と同じ変数を探索する\n- applyとcall\n- コールバックの注意点\n\t- applyとcallを使う\n- ...プロトタイプ継承...\n\n\n----\n\n## [Speaking JavaScript](http://speakingjs.com/es5/ \"Speaking JavaScript\")\n\n> [Chapter 17. Objects and Inheritance](http://speakingjs.com/es5/ch17.html#_this_as_an_implicit_parameter_of_functions_and_methods \"Chapter 17. Objects and Inheritance\")\n\n\n- non-strict modeの`this`はglobal\n- strict modeの`this`はundefined\n- メソッドにおける`this`は所属してるオブジェクト\n- call,apply,bind\n- bindの掘り下げ\n- applyのconstructor\n- Pitfall: `var fn = obj.fn`した時の`this`の問題\n- Workaround: bind\n- Pitfall: メソッド内の入れ子関数の問題`this.friends.forEach`の中での`this`の問題\n- Workaround: that = this\n- Workaround: bind\n- Workaround: 3rd argumetns"
+  }
+]

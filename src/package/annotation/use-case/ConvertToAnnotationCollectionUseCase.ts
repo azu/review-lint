@@ -12,7 +12,10 @@ export class ConvertToAnnotationCollectionUseCasePayload extends Payload {
 
 export class ConvertToAnnotationCollectionUseCase extends UseCase {
     execute(results: FromResult[]) {
-        const collections = results.map(result => convertToFileAnnotationCollection(result));
+        const filterdResults = results.filter(result => {
+            return result.messages.length > 0;
+        });
+        const collections = filterdResults.map(result => convertToFileAnnotationCollection(result));
         this.dispatch(new ConvertToAnnotationCollectionUseCasePayload(collections));
     }
 }

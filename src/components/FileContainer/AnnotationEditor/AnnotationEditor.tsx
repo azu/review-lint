@@ -5,10 +5,11 @@ import { Annotation } from "../../../package/annotation/Annotation";
 import { deserialize, serialize } from "./ValueRule";
 
 const { Editor } = require("slate-react");
-const { Data } = require("slate");
-
+const { Data, Range } = require("slate");
+const Source = require("structured-source");
 const getOffset = (value: ValueType, targetOffset: number) => {
     const document = value.document;
+    console.log("getOffset", targetOffset);
     const startNode = document.getTextAtOffset(targetOffset);
     const offset = document.getOffset(startNode.key);
     return targetOffset - offset;
@@ -66,24 +67,31 @@ type SlateMark = {
     marks: { type: string; data: any }[];
 };
 
-export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
+export interface AnnotationEditorState {
+    value: ValueType;
+}
+
+export class AnnotationEditor extends React.Component<AnnotationEditorProps, AnnotationEditorState> {
     // Set the initial value when the app is first constructed.
+    private source = new Source(this.props.text);
     state = {
         value: serialize(this.props.text)
     };
+    // current highlight mark
+    private highlightMark?: SlateMark;
 
-    private refreshEditorWithValue(value: ValueType, focusAnnotation?: Annotation) {
+    private refreshEditorWithValue(props: AnnotationEditorProps, value: ValueType) {
+        const focusAnnotation = props.focusAnnotation;
+        const annotations = props.annotations;
         const decorations: SlateMark[] = [];
         // focus highlight
         if (focusAnnotation) {
-            decorations.push(
-                highlightRange(value, {
-                    range: focusAnnotation.range,
-                    type: "highlight"
-                })
-            );
+            this.highlightMark = highlightRange(value, {
+                range: focusAnnotation.range,
+                type: "highlight"
+            });
+            decorations.push(this.highlightMark);
         }
-
         // highlight nodes
         deserialize(value);
         const txtAST = this.props.parse(this.props.text);
@@ -178,7 +186,7 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
                 }
             }
         });
-        this.props.annotations.forEach(annotation => {
+        annotations.forEach(annotation => {
             decorations.push(
                 highlightRange(value, {
                     range: annotation.range,
@@ -191,6 +199,47 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
         return change.value;
     }
 
+    private updateHighlight(value: ValueType, focusAnnotation?: Annotation) {
+        // focus highlight
+        let currentChange = value.change().removeMark("highlight");
+        if (!focusAnnotation) {
+            return this.setState({
+                value: currentChange.value
+            });
+        }
+        // start <-> next line -1
+        const currentLocationStart = this.source.indexToPosition(focusAnnotation.range[0]);
+        const startLocation = {
+            line: currentLocationStart.line,
+            column: 0
+        };
+        const startIndex = this.source.positionToIndex(startLocation);
+        const currentLocationEnd = this.source.indexToPosition(focusAnnotation.range[1]);
+        const nextLineLocation = {
+            line: currentLocationEnd.line + 1,
+            column: 0
+        };
+        const endIndexPlus1 = this.source.positionToIndex(nextLineLocation);
+        const range = [startIndex, endIndexPlus1 ? endIndexPlus1 - 1 : focusAnnotation.range[1]];
+        console.log(range);
+        this.highlightMark = highlightRange(value, {
+            range: range,
+            type: "highlight"
+        });
+        const change = currentChange.addMarkAtRange(
+            Range.fromJSON({
+                anchorKey: this.highlightMark.anchorKey,
+                anchorOffset: this.highlightMark.anchorOffset,
+                focusKey: this.highlightMark.focusKey,
+                focusOffset: this.highlightMark.focusOffset
+            }),
+            this.highlightMark.marks[0]
+        );
+        return this.setState({
+            value: change.value
+        });
+    }
+
     private scrollIntoViewAnnotation = (value: ValueType, annotation: Annotation) => {
         const range = annotation.range;
         const textAtOffset = value.document.getTextAtOffset(range[0]);
@@ -199,18 +248,22 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
         }
         const node = document.querySelector(`[data-key="${textAtOffset.key}"]`);
         if (node) {
-            node.scrollIntoView();
+            node.scrollIntoView({
+                behavior: "auto",
+                block: "center",
+                inline: "nearest"
+            });
         }
     };
 
     // On change, update the app's React state with the new editor value.
     onChange = ({ value }: { value: ValueType }) => {
-        const newValue = this.refreshEditorWithValue(value, this.props.focusAnnotation);
+        const newValue = this.refreshEditorWithValue(this.props, value);
         this.setState({ value: newValue });
     };
 
     componentDidMount() {
-        const newValue = this.refreshEditorWithValue(this.state.value);
+        const newValue = this.refreshEditorWithValue(this.props, this.state.value);
         this.setState({ value: newValue });
     }
 
@@ -219,11 +272,11 @@ export class AnnotationEditor extends React.Component<AnnotationEditorProps> {
             if (nextProps.focusAnnotation) {
                 this.scrollIntoViewAnnotation(this.state.value, nextProps.focusAnnotation);
             }
-            const newValue = this.refreshEditorWithValue(this.state.value, nextProps.focusAnnotation);
-            this.setState({ value: newValue });
+            this.updateHighlight(this.state.value, nextProps.focusAnnotation);
         }
         if (this.props.text !== nextProps.text && nextProps.text) {
-            const newValue = this.props.parse(nextProps.text);
+            const newValue = serialize(nextProps.text);
+            this.source = new Source(nextProps.text);
             this.setState({ value: newValue });
         }
     }
